@@ -1,5 +1,6 @@
 package com.mystic.gamemode;
 
+import com.mystic.gamemode.utils.Reference;
 import net.minecraft.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -10,7 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-@Mod("gamemode")
+@Mod(Reference.MODID)
 public class Main
 {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -25,9 +26,7 @@ public class Main
 
     private void setup(final FMLCommonSetupEvent event)
     {
-        // some preinit code
-        LOGGER.info("HELLO FROM PREINIT");
-        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
