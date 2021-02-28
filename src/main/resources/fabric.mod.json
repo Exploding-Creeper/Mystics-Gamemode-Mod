@@ -20,12 +20,14 @@
   "entrypoints": {
     "main": [
       "com.mystic.gamemode.GamemodeMod"
+    ],
+    "mm:early_risers": [
+      "com.mystic.gamemode.GamemodeUnlocked"
     ]
   },
   "mixins": [
     "gamemode.mixins.json"
   ],
-
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
@@ -33,5 +35,6 @@
   },
   "suggests": {
     "another-mod": "*"
-  }
+  },
+  "accessWidener": "gamemode.accesswidener"
 }

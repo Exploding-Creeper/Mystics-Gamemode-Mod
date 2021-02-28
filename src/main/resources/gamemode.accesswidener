@@ -1,0 +1,4 @@
+accessWidener	v1	named
+accessible field net/minecraft/client/gui/screen/world/CreateWorldScreen gameModeSwitchButton Lnet/minecraft/client/gui/widget/ButtonWidget;
+accessible method net/minecraft/client/gui/screen/GameModeSelectionScreen$GameMode next ()Ljava/util/Optional;
+accessible method net/minecraft/client/gui/screen/GameModeSelectionScreen$GameMode of (Lnet/minecraft/world/GameMode;)Ljava/util/Optional;
