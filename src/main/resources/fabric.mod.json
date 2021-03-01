@@ -22,7 +22,7 @@
       "com.mystic.gamemode.GamemodeMod"
     ],
     "mm:early_risers": [
-      "com.mystic.gamemode.GamemodeUnlocked"
+      "com.mystic.gamemode.enumrunnables.GamemodeUnlocked"
     ]
   },
   "mixins": [

@@ -6,7 +6,9 @@
   "mixins": [
   ],
   "client": [
-    "GamemodeMixin"
+    "GamemodeMixin",
+    "GameMixin",
+    "WorldCreateMixin"
   ],
   "injectors": {
     "defaultRequire": 1
