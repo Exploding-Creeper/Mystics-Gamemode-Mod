@@ -4,10 +4,12 @@
   "package": "com.mystic.gamemode.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "ServerBooleanThing"
   ],
   "client": [
-    "GamemodeMixin",
+    "CreativeInventoryBooleanMixin",
     "GameMixin",
+    "GamemodeMixin",
     "WorldCreateMixin"
   ],
   "injectors": {

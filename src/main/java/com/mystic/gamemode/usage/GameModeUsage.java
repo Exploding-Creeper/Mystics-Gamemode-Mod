@@ -12,6 +12,7 @@ public class GameModeUsage {
     //ClassTinkerers.getEnum(Class.forName(CreateWorldScreen.class.getName() + "$Mode").asSubclass(Enum.class), "UNLOCKABLE");
 
     public static final GameMode UNLOCKABLE = ClassTinkerers.getEnum(GameMode.class, "UNLOCKABLE");
+    private static GameMode gameMode;
 
     public static GameMode getGameModeFromPlayerEntity(PlayerEntity playerEntity) {
         {
@@ -27,6 +28,10 @@ public class GameModeUsage {
                 return ClassTinkerers.getEnum(GameMode.class, "UNLOCKABLE");
             }
         }
+    }
+
+    public static boolean isUnlockable() {
+        return gameMode == ClassTinkerers.getEnum(GameMode.class, "UNLOCKABLE");
     }
 
     public static boolean isUnlockablePresent(){
