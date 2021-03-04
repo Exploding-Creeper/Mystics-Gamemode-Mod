@@ -10,7 +10,8 @@
     "CreativeInventoryBooleanMixin",
     "GameMixin",
     "GamemodeMixin",
-    "WorldCreateMixin"
+    "WorldCreateMixin",
+    "LanMixin"
   ],
   "injectors": {
     "defaultRequire": 1
