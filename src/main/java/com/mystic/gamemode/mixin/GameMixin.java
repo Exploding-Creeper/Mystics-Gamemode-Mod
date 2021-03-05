@@ -18,7 +18,6 @@ public abstract class GameMixin
 
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/world/GameMode;isBlockBreakingRestricted()Z", cancellable = true)
     private void isSurvivalLike(CallbackInfoReturnable<Boolean> cir){
-
         if (getName().equals(ClassTinkerers.getEnum(GameMode.class, "UNLOCKABLE").getName())) {
             cir.cancel();
             cir.setReturnValue(false);

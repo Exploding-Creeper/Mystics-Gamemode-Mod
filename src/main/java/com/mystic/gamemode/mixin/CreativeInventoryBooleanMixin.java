@@ -37,7 +37,7 @@ public class CreativeInventoryBooleanMixin {
     private void hasCreativeMenu(CallbackInfoReturnable<Boolean> cir){
         cir.cancel();
         if(gameMode == GameModeUsage.UNLOCKABLE){
-            cir.setReturnValue(false); //Change this back to true, when menu are fixed maybe!!!
+            cir.setReturnValue(true);
         }
         else if(gameMode == GameMode.CREATIVE){
             cir.setReturnValue(gameMode.isCreative());
@@ -90,7 +90,7 @@ public class CreativeInventoryBooleanMixin {
     }
 
     //So the server knows how many blocks you freaking have!!!
-    @Inject(at = @At(value = "HEAD", target = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;interactBlock(Lnet/minecraft/client/network/ClientPlayerEntity;Lnet/minecraft/client/world/ClientWorld;Lnet/minecraft/util/Hand;Lnet/minecraft/util/hit/BlockHitResult;)Lnet/minecraft/util/ActionResult;"), method = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;interactBlock(Lnet/minecraft/client/network/ClientPlayerEntity;Lnet/minecraft/client/world/ClientWorld;Lnet/minecraft/util/Hand;Lnet/minecraft/util/hit/BlockHitResult;)Lnet/minecraft/util/ActionResult;", cancellable = true)
+    @Inject(at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/item/ItemUsageContext;<init>(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;Lnet/minecraft/util/hit/BlockHitResult;)V"), method = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;interactBlock(Lnet/minecraft/client/network/ClientPlayerEntity;Lnet/minecraft/client/world/ClientWorld;Lnet/minecraft/util/Hand;Lnet/minecraft/util/hit/BlockHitResult;)Lnet/minecraft/util/ActionResult;", cancellable = true)
     private void interactBlock(ClientPlayerEntity player, ClientWorld world, Hand hand, BlockHitResult hitResult, CallbackInfoReturnable<ActionResult> cir){
         ItemUsageContext itemUsageContext2 = new ItemUsageContext(player, hand, hitResult);
         ActionResult actionResult3;
