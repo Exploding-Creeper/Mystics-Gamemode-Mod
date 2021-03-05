@@ -89,15 +89,11 @@ public class CreativeInventoryBooleanMixin {
         }
     }
 
-    //So the server knows how many blocks you freaking have!!!
     @Inject(at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/item/ItemUsageContext;<init>(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;Lnet/minecraft/util/hit/BlockHitResult;)V"), method = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;interactBlock(Lnet/minecraft/client/network/ClientPlayerEntity;Lnet/minecraft/client/world/ClientWorld;Lnet/minecraft/util/Hand;Lnet/minecraft/util/hit/BlockHitResult;)Lnet/minecraft/util/ActionResult;", cancellable = true)
     private void interactBlock(ClientPlayerEntity player, ClientWorld world, Hand hand, BlockHitResult hitResult, CallbackInfoReturnable<ActionResult> cir){
-        ItemUsageContext itemUsageContext2 = new ItemUsageContext(player, hand, hitResult);
-        ActionResult actionResult3;
         ItemStack itemStack1 = player.getStackInHand(hand);
-        if (gameMode == GameModeUsage.UNLOCKABLE) {
+        if (gameMode == GameModeUsage.UNLOCKABLE) { //prevent item count from going down
             int i = itemStack1.getCount();
-            actionResult3 = itemStack1.useOnBlock(itemUsageContext2);
             itemStack1.setCount(i);
         }
     }

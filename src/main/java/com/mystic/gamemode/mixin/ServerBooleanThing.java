@@ -23,18 +23,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class ServerBooleanThing {
 
     @Shadow private GameMode gameMode;
-
-
     //Lets you place blocks infinitely
     @Inject(at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/item/ItemUsageContext;<init>(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;Lnet/minecraft/util/hit/BlockHitResult;)V"), method = "Lnet/minecraft/server/network/ServerPlayerInteractionManager;interactBlock(Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/world/World;Lnet/minecraft/item/ItemStack;Lnet/minecraft/util/Hand;Lnet/minecraft/util/hit/BlockHitResult;)Lnet/minecraft/util/ActionResult;", cancellable = true)
     private void interactBlock(ServerPlayerEntity player, World world, ItemStack stack, Hand hand, BlockHitResult hitResult, CallbackInfoReturnable<ActionResult> cir){
-        ItemUsageContext itemUsageContext2 = new ItemUsageContext(player, hand, hitResult);
-        ActionResult actionResult3;
         ItemStack itemStack1 = player.getStackInHand(hand);
-
         if (gameMode == GameModeUsage.UNLOCKABLE) {
             int i = itemStack1.getCount();
-            actionResult3 = itemStack1.useOnBlock(itemUsageContext2);
             itemStack1.setCount(i);
         }
     }
