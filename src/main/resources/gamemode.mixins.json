@@ -4,6 +4,7 @@
   "package": "com.mystic.gamemode.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "MixinServerPlayNetworkHandler",
     "ServerBooleanThing"
   ],
   "client": [
