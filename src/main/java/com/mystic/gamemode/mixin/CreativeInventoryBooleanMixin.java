@@ -97,4 +97,5 @@ public class CreativeInventoryBooleanMixin {
             itemStack1.setCount(i);
         }
     }
+
 }

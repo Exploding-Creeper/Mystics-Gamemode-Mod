@@ -9,6 +9,6 @@ accessible method net/minecraft/client/gui/screen/world/CreateWorldScreen tweakD
 accessible method net/minecraft/client/gui/screen/world/CreateWorldScreen updateSettingsLabels ()V
 accessible field net/minecraft/client/gui/screen/world/CreateWorldScreen$Mode translationSuffix Ljava/lang/String;
 accessible field net/minecraft/client/gui/screen/world/CreateWorldScreen GAME_MODE_TEXT Lnet/minecraft/text/Text;
-
+accessible class net/minecraft/client/gui/screen/ingame/CreativeInventoryScreen$LockableSlot
 
 
