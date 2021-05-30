@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.5-SNAPSHOT'
+	id 'fabric-loom' version '0.7-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -17,7 +17,13 @@ if (project.hasProperty('buildNumber')) {
 
 
 repositories {
+	mavenCentral()
     maven { url 'https://jitpack.io/'}
+}
+
+configurations {
+	shadow
+	api.extendsFrom shadow
 }
 
 dependencies {
@@ -28,6 +34,12 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	modImplementation include('com.github.Chocohead:Fabric-ASM:2.2')
+
+	include 'com.github.Azagwen:mcgui:1.16-SNAPSHOT'
+
+	compile 'com.electronwill.night-config:toml:3.6.3'
+
+
 }
 
 processResources {

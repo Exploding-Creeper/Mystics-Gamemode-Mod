@@ -37,7 +37,7 @@ public abstract class WorldCreateMixin extends Screen{
 
     @Shadow public ButtonWidget gameModeSwitchButton;
 
-    @Inject(at = @At(value = "FIELD" ,shift = At.Shift.BEFORE, target = "Lnet/minecraft/client/gui/screen/world/CreateWorldScreen;currentMode:Lnet/minecraft/client/gui/screen/world/CreateWorldScreen$Mode;"), method = "Lnet/minecraft/client/gui/screen/world/CreateWorldScreen;<init>(Lnet/minecraft/client/gui/screen/Screen;Lnet/minecraft/world/level/LevelInfo;Lnet/minecraft/world/gen/GeneratorOptions;Ljava/nio/file/Path;Lnet/minecraft/resource/DataPackSettings;Lnet/minecraft/util/registry/DynamicRegistryManager$Impl;)V")
+    @Inject(at = @At(value = "FIELD" ,shift = At.Shift.BEFORE, target = "Lnet/minecraft/client/gui/screen/world/CreateWorldScreen;currentMode:Lnet/minecraft/client/gui/screen/world/CreateWorldScreen$Mode;"), method = "<init>(Lnet/minecraft/client/gui/screen/Screen;Lnet/minecraft/world/level/LevelInfo;Lnet/minecraft/world/gen/GeneratorOptions;Ljava/nio/file/Path;Lnet/minecraft/resource/DataPackSettings;Lnet/minecraft/util/registry/DynamicRegistryManager$Impl;)V")
     private void inject(Screen parent, LevelInfo levelInfo, GeneratorOptions generatorOptions, Path dataPackTempDir, DataPackSettings dataPackSettings, DynamicRegistryManager.Impl registryManager, CallbackInfo ci){
         if(GameModeUsage.getGameModeFromId(4) == levelInfo.getGameMode()) {
             this.currentMode = ClassTinkerers.getEnum(CreateWorldScreen.Mode.class, "UNLOCKABLE");

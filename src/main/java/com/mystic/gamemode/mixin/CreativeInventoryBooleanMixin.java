@@ -6,7 +6,6 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
 import net.minecraft.network.packet.c2s.play.CreativeInventoryActionC2SPacket;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -26,14 +25,13 @@ public class CreativeInventoryBooleanMixin {
 
     @Shadow private final GameMode gameMode;
 
-    @Mutable @Final @Shadow private final ClientPlayNetworkHandler networkHandler;
+    @Mutable @Final @Shadow private ClientPlayNetworkHandler networkHandler;
 
-    public CreativeInventoryBooleanMixin(GameMode gameMode, ClientPlayNetworkHandler networkHandler) {
+    public CreativeInventoryBooleanMixin(GameMode gameMode) {
         this.gameMode = gameMode;
-        this.networkHandler = networkHandler;
     }
 
-    @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;hasCreativeInventory()Z", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "hasCreativeInventory()Z", cancellable = true)
     private void hasCreativeMenu(CallbackInfoReturnable<Boolean> cir){
         cir.cancel();
         if(gameMode == GameModeUsage.UNLOCKABLE){
@@ -44,7 +42,7 @@ public class CreativeInventoryBooleanMixin {
         }
     }
 
-    @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;hasStatusBars()Z", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "hasStatusBars()Z", cancellable = true)
     private void hasStatusBars(CallbackInfoReturnable<Boolean> cir){
         cir.cancel();
         if(gameMode == GameModeUsage.UNLOCKABLE){
@@ -56,7 +54,7 @@ public class CreativeInventoryBooleanMixin {
     }
 
 
-    @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;hasExperienceBar()Z", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "hasExperienceBar()Z", cancellable = true)
     private void hasExperienceBar(CallbackInfoReturnable<Boolean> cir){
         cir.cancel();
         if(gameMode == GameModeUsage.UNLOCKABLE){
@@ -67,8 +65,8 @@ public class CreativeInventoryBooleanMixin {
         }
     }
 
-    @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;dropCreativeStack(Lnet/minecraft/item/ItemStack;)V", cancellable = true)
-    private void dropCreativeStack(ItemStack stack, CallbackInfo ci){
+    @Inject(at = @At("HEAD"), method = "dropCreativeStack(Lnet/minecraft/item/ItemStack;)V", cancellable = true)
+    public void dropCreativeStack(ItemStack stack, CallbackInfo ci){
         ci.cancel();
         if (gameMode == GameModeUsage.UNLOCKABLE && !stack.isEmpty()) {
             this.networkHandler.sendPacket(new CreativeInventoryActionC2SPacket(-1, stack));
@@ -78,8 +76,8 @@ public class CreativeInventoryBooleanMixin {
         }
     }
 
-    @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;clickCreativeStack(Lnet/minecraft/item/ItemStack;I)V", cancellable = true)
-    private void clickCreativeStack(ItemStack stack, int slotId, CallbackInfo ci){
+    @Inject(at = @At("HEAD"), method = "clickCreativeStack(Lnet/minecraft/item/ItemStack;I)V", cancellable = true)
+    public void clickCreativeStack(ItemStack stack, int slotId, CallbackInfo ci){
         ci.cancel();
         if (gameMode == GameModeUsage.UNLOCKABLE) {
             networkHandler.sendPacket(new CreativeInventoryActionC2SPacket(slotId, stack));
@@ -89,7 +87,7 @@ public class CreativeInventoryBooleanMixin {
         }
     }
 
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/GameMode;isCreative()Z"), method = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;interactBlock(Lnet/minecraft/client/network/ClientPlayerEntity;Lnet/minecraft/client/world/ClientWorld;Lnet/minecraft/util/Hand;Lnet/minecraft/util/hit/BlockHitResult;)Lnet/minecraft/util/ActionResult;", cancellable = true)
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/GameMode;isCreative()Z"), method = "interactBlock(Lnet/minecraft/client/network/ClientPlayerEntity;Lnet/minecraft/client/world/ClientWorld;Lnet/minecraft/util/Hand;Lnet/minecraft/util/hit/BlockHitResult;)Lnet/minecraft/util/ActionResult;", cancellable = true)
     private void interactBlock(ClientPlayerEntity player, ClientWorld world, Hand hand, BlockHitResult hitResult, CallbackInfoReturnable<ActionResult> cir){
         ItemStack itemStack1 = player.getStackInHand(hand);
         if (gameMode == GameModeUsage.UNLOCKABLE) { //prevent item count from going down

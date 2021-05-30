@@ -4,6 +4,7 @@
   "package": "com.mystic.gamemode.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "MixinCreativeScreenHandler",
     "MixinServerPlayNetworkHandler",
     "ServerBooleanThing"
   ],
@@ -12,8 +13,8 @@
     "GameMixin",
     "GamemodeMixin",
     "LanMixin",
-    "WorldCreateMixin",
-    "LockableSlotMixin"
+    "LockableSlotMixin",
+    "WorldCreateMixin"
   ],
   "injectors": {
     "defaultRequire": 1

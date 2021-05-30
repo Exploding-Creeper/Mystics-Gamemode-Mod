@@ -25,7 +25,7 @@ public class GamemodeMixin {
 
 	private static GameMode gameMode2;
 
-	@Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/gui/screen/GameModeSelectionScreen$GameMode;next()Ljava/util/Optional;", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "next()Ljava/util/Optional;", cancellable = true)
 	private void next(CallbackInfoReturnable<Optional<GameModeSelectionScreen.GameMode>> cir) {
 		if (gameMode == GameModeSelectionScreen.GameMode.SPECTATOR || gameMode == GameModeSelectionScreen.GameMode.ADVENTURE ||
 				gameMode == GameModeSelectionScreen.GameMode.SURVIVAL || gameMode == GameModeSelectionScreen.GameMode.CREATIVE) {
@@ -41,7 +41,7 @@ public class GamemodeMixin {
 		}
 	}
 
-	@Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/gui/screen/GameModeSelectionScreen$GameMode;of(Lnet/minecraft/world/GameMode;)Ljava/util/Optional;", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "of(Lnet/minecraft/world/GameMode;)Ljava/util/Optional;", cancellable = true)
 	private static void of(CallbackInfoReturnable<Optional<GameModeSelectionScreen.GameMode>> cir) {
 		if (gameMode2 == UNLOCKABLE) {
 			cir.cancel();
