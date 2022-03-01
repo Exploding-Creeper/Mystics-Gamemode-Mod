@@ -1,16 +1,9 @@
 accessWidener	v1	named
-accessible field net/minecraft/client/gui/screen/world/CreateWorldScreen gameModeSwitchButton Lnet/minecraft/client/gui/widget/ButtonWidget;
-accessible method net/minecraft/client/gui/screen/GameModeSelectionScreen$GameMode next ()Ljava/util/Optional;
-accessible method net/minecraft/client/gui/screen/GameModeSelectionScreen$GameMode of (Lnet/minecraft/world/GameMode;)Ljava/util/Optional;
-accessible class net/minecraft/client/gui/screen/GameModeSelectionScreen$GameMode
-accessible class net/minecraft/world/GameMode;
+accessible method net/minecraft/client/gui/screen/GameModeSelectionScreen$GameModeSelection next ()Ljava/util/Optional;
+accessible method net/minecraft/client/gui/screen/GameModeSelectionScreen$GameModeSelection of (Lnet/minecraft/world/GameMode;)Ljava/util/Optional;
+accessible class net/minecraft/client/gui/screen/GameModeSelectionScreen$GameModeSelection
+accessible class net/minecraft/world/GameMode
 accessible class net/minecraft/client/gui/screen/world/CreateWorldScreen$Mode
-accessible method net/minecraft/client/gui/screen/world/CreateWorldScreen tweakDefaultsTo (Lnet/minecraft/client/gui/screen/world/CreateWorldScreen$Mode;)V
-accessible method net/minecraft/client/gui/screen/world/CreateWorldScreen updateSettingsLabels ()V
-accessible field net/minecraft/client/gui/screen/world/CreateWorldScreen$Mode translationSuffix Ljava/lang/String;
-accessible field net/minecraft/client/gui/screen/world/CreateWorldScreen GAME_MODE_TEXT Lnet/minecraft/text/Text;
 accessible class net/minecraft/client/gui/screen/ingame/CreativeInventoryScreen$LockableSlot
-accessible field net/minecraft/client/gui/screen/ingame/CreativeInventoryScreen INVENTORY Lnet/minecraft/inventory/SimpleInventory;
-accessible method net/minecraft/screen/ScreenHandler addSlot (Lnet/minecraft/screen/slot/Slot;)Lnet/minecraft/screen/slot/Slot;
 
 

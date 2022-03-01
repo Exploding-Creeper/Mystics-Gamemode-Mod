@@ -29,8 +29,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.nio.file.Path;
-
-import static net.minecraft.client.gui.screen.world.CreateWorldScreen.GAME_MODE_TEXT;
+import java.util.Objects;
 
 @Mixin(CreateWorldScreen.class)
 public abstract class WorldCreateMixin extends Screen{
@@ -52,6 +51,8 @@ public abstract class WorldCreateMixin extends Screen{
     @Shadow private ButtonWidget gameRulesButton;
     @Shadow private GameRules gameRules;
     @Final @Shadow public MoreOptionsDialog moreOptionsDialog;
+    @Final @Shadow private static Text GAME_MODE_TEXT;
+
     @Shadow private Difficulty getDifficulty() {
         return difficulty;
     }
@@ -100,7 +101,7 @@ public abstract class WorldCreateMixin extends Screen{
     @Inject(method = "init()V", at = @At(value = "HEAD"), cancellable = true)
     private void init(CallbackInfo ci) {
         ci.cancel();
-        client.keyboard.setRepeatEvents(true);
+        Objects.requireNonNull(client).keyboard.setRepeatEvents(true);
         levelNameField = new TextFieldWidget(textRenderer, width / 2 - 100, 60, 200, 20, new TranslatableText("selectWorld.enterName")) {
             protected MutableText getNarrationMessage() {
                 return ScreenTexts.joinSentences(super.getNarrationMessage(), new TranslatableText("selectWorld.resultFolder")).append(" ").append(saveDirectoryName);
@@ -108,27 +109,21 @@ public abstract class WorldCreateMixin extends Screen{
         };
         levelNameField.setText(levelName);
         levelNameField.setChangedListener((levelName) -> {
-            levelName = levelName;
             createLevelButton.active = !levelNameField.getText().isEmpty();
             updateSaveFolderName();
         });
         addSelectableChild(levelNameField);
         int i = width / 2 - 155;
         int j = width / 2 + 5;
-        gameModeSwitchButton = addDrawableChild(CyclingButtonWidget.builder(CreateWorldScreen.Mode::asText).values(new CreateWorldScreen.Mode[]{ CreateWorldScreen.Mode.SURVIVAL, CreateWorldScreen.Mode.HARDCORE, CreateWorldScreen.Mode.CREATIVE, GameModeUsage.getMode()}).initially(currentMode).narration((button) -> {
-            return ClickableWidget.getNarrationMessage(button.getMessage()).append(ScreenTexts.SENTENCE_SEPARATOR).append(firstGameModeDescriptionLine).append(" ").append(secondGameModeDescriptionLine);
-        }).build(i, 100, 150, 20, GAME_MODE_TEXT, (button, mode) -> {
+        gameModeSwitchButton = addDrawableChild(CyclingButtonWidget.builder(CreateWorldScreen.Mode::asText).values(new CreateWorldScreen.Mode[]{ CreateWorldScreen.Mode.SURVIVAL, CreateWorldScreen.Mode.HARDCORE, CreateWorldScreen.Mode.CREATIVE, GameModeUsage.getMode()}).initially(currentMode).narration((button) -> ClickableWidget.getNarrationMessage(button.getMessage()).append(ScreenTexts.SENTENCE_SEPARATOR).append(firstGameModeDescriptionLine).append(" ").append(secondGameModeDescriptionLine)).build(i, 100, 150, 20, GAME_MODE_TEXT, (button, mode) -> {
             tweakDefaultsTo(mode);
         }));
         difficultyButton = addDrawableChild(CyclingButtonWidget.builder(Difficulty::getTranslatableName).values(Difficulty.values()).initially(getDifficulty()).build(j, 100, 150, 20, new TranslatableText("options.difficulty"), (button, difficulty) -> {
             currentDifficulty = difficulty;
         }));
 
-        enableCheatsButton = addDrawableChild(CyclingButtonWidget.onOffBuilder(cheatsEnabled && !hardcore).narration((button) -> {
-            return ScreenTexts.joinSentences(button.getGenericNarrationMessage(), new TranslatableText("selectWorld.allowCommands.info"));
-        }).build(i, 151, 150, 20, new TranslatableText("selectWorld.allowCommands"), (button, cheatsEnabled) -> {
+        enableCheatsButton = addDrawableChild(CyclingButtonWidget.onOffBuilder(cheatsEnabled && !hardcore).narration((button) -> ScreenTexts.joinSentences(button.getGenericNarrationMessage(), new TranslatableText("selectWorld.allowCommands.info"))).build(i, 151, 150, 20, new TranslatableText("selectWorld.allowCommands"), (button, cheatsEnabled) -> {
             tweakedCheats = true;
-            cheatsEnabled = cheatsEnabled;
         }));
         dataPacksButton = addDrawableChild(new ButtonWidget(j, 151, 150, 20, new TranslatableText("selectWorld.dataPacks"), (button) -> {
             openPackScreen();
@@ -137,7 +132,6 @@ public abstract class WorldCreateMixin extends Screen{
             client.setScreen(new EditGameRulesScreen(gameRules.copy(), (optional) -> {
                 client.setScreen(this);
                 optional.ifPresent((gameRules) -> {
-                    gameRules = gameRules;
                 });
             }));
         }));

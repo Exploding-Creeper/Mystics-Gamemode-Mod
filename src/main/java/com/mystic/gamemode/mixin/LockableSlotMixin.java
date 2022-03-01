@@ -21,10 +21,7 @@ public class LockableSlotMixin {
 
             infoReturnable.setReturnValue(true);
 
-        } /*else {
-
-            infoReturnable.setReturnValue(true);
-        }*/
+        }
     }
 }
 
