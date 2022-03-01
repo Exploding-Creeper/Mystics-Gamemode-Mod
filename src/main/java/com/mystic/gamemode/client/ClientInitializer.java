@@ -5,7 +5,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
-import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.world.GameMode;
 import org.lwjgl.glfw.GLFW;
@@ -21,7 +21,7 @@ public class ClientInitializer implements ClientModInitializer {
             while (binding.wasPressed()) {
                 assert client.player != null;
                 if(GameModeUsage.getGameModeFromPlayerEntity(client.player) == GameModeUsage.UNLOCKABLE) {
-                    client.openScreen(new CreativeInventoryScreen(client.player));
+                    client.setScreen(new CreativeInventoryScreen(client.player));
                 }
             }
         });

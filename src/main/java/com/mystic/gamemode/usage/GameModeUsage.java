@@ -9,18 +9,26 @@ import net.minecraft.world.GameMode;
 public class GameModeUsage {
 
     //GameMode.class.getName();
-    //ClassTinkerers.getEnum(Class.forName(CreateWorldScreen.class.getName() + "$Mode").asSubclass(Enum.class), "UNLOCKABLE");
+    public static CreateWorldScreen.Mode UNLOCKABLEMODE;
+
+    static {
+        UNLOCKABLEMODE = ClassTinkerers.getEnum(CreateWorldScreen.Mode.class, "UNLOCKABLE");
+    }
 
     public static final GameMode UNLOCKABLE = ClassTinkerers.getEnum(GameMode.class, "UNLOCKABLE");
     private static GameMode gameMode;
+
+    public static CreateWorldScreen.Mode getMode() {
+        return ClassTinkerers.getEnum(CreateWorldScreen.Mode.class, "UNLOCKABLE");
+    }
 
     public static GameMode getGameModeFromPlayerEntity(PlayerEntity playerEntity) {
         {
             if (playerEntity.isCreative()) {
                 return GameMode.CREATIVE;
-            } else if (!playerEntity.isInvulnerableTo(DamageSource.FALL) && playerEntity.canModifyBlocks() && !playerEntity.canFly()) {
+            } else if (!playerEntity.isInvulnerableTo(DamageSource.FALL) && playerEntity.canModifyBlocks() && !playerEntity.getAbilities().flying) {
                 return GameMode.SURVIVAL;
-            } else if (!playerEntity.isInvulnerableTo(DamageSource.FALL) && !playerEntity.canModifyBlocks() && !playerEntity.canFly()) {
+            } else if (!playerEntity.isInvulnerableTo(DamageSource.FALL) && !playerEntity.canModifyBlocks() && !playerEntity.getAbilities().flying) {
                 return GameMode.ADVENTURE;
             } else if (playerEntity.isSpectator()) {
                 return GameMode.SPECTATOR;

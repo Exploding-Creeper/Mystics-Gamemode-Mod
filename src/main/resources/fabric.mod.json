@@ -4,9 +4,9 @@
   "version": "${version}",
 
   "name": "Mystic's Gamemode Mod",
-  "description": "A gamemode based off of terraria's journey mode",
+  "description": "A brand new gamemode",
   "authors": [
-    "Me!"
+    "Mysticpasta1"
   ],
   "contact": {
     "homepage": "https://mystic.hypherionmc.me/",
@@ -34,7 +34,7 @@
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
-    "minecraft": "1.16.x"
+    "minecraft": "1.17.x"
   },
   "suggests": {
     "another-mod": "*"
