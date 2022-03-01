@@ -12,14 +12,14 @@ public class GameModeUsage {
     public static CreateWorldScreen.Mode UNLOCKABLEMODE;
 
     static {
-        UNLOCKABLEMODE = ClassTinkerers.getEnum(CreateWorldScreen.Mode.class, "UNLOCKABLE");
+        UNLOCKABLEMODE = ClassTinkerers.getEnum(CreateWorldScreen.Mode.class, "UNLOCKABLEMODE");
     }
 
     public static final GameMode UNLOCKABLE = ClassTinkerers.getEnum(GameMode.class, "UNLOCKABLE");
     private static GameMode gameMode;
 
     public static CreateWorldScreen.Mode getMode() {
-        return ClassTinkerers.getEnum(CreateWorldScreen.Mode.class, "UNLOCKABLE");
+        return ClassTinkerers.getEnum(CreateWorldScreen.Mode.class, "UNLOCKABLEMODE");
     }
 
     public static GameMode getGameModeFromPlayerEntity(PlayerEntity playerEntity) {

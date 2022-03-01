@@ -24,6 +24,6 @@ public class GamemodeUnlocked implements Runnable {
                 new Object[]{new TranslatableText("gameMode.unlockable"), "/gamemode unlockable", new ItemStack(Items.ANVIL)}).build();
 
         String mode = remapper.mapClassName("intermediary", "net.minecraft.class_525$class_4539");
-        ClassTinkerers.enumBuilder(mode ,String.class, 'L' + gameModeCommand + ';').addEnum("UNLOCKABLE", () -> new Object[] {"unlockable", ClassTinkerers.getEnum(GameMode.class, "UNLOCKABLE")}).build();
+        ClassTinkerers.enumBuilder(mode ,String.class, 'L' + gameModeCommand + ';').addEnum("UNLOCKABLEMODE", () -> new Object[] {"unlockable", ClassTinkerers.getEnum(GameMode.class, "UNLOCKABLE")}).build();
     }
 }
