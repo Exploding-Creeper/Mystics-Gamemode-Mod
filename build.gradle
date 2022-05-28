@@ -1,46 +1,59 @@
 plugins {
-	id 'fabric-loom' version '0.7-SNAPSHOT'
+	id 'dev.architectury.loom' version '0.10.0-SNAPSHOT'
+	id 'io.github.juuxel.loom-quiltflower' version '1.6.0'
 	id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = project.archives_base_name
-group = project.maven_group
 version = project.mod_version
+group = project.maven_group
 
-if (project.hasProperty('buildNumber')) {
-    version = version + "." + buildNumber
+// JENKINS STUFF! LEAVE THIS ALONE!
+if (System.getenv('BUILD_NUMBER') != null) {
+	version = "-dev-" + System.getenv('BUILD_NUMBER')
 }
-
 
 
 repositories {
-	mavenCentral()
-    maven { url 'https://jitpack.io/'}
-}
-
-configurations {
-	shadow
-	api.extendsFrom shadow
+	maven {
+		name = "cursemaven"
+		url = "https://www.cursemaven.com"
+	}
+	flatDir {
+		dir 'libs'
+	}
+	maven {
+		url = "https://maven.parchmentmc.org"
+	}
 }
 
 dependencies {
+	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-	modImplementation include('com.github.Chocohead:Fabric-ASM:2.2')
-
-	include 'com.github.Azagwen:mcgui:1.16-SNAPSHOT'
-
-	compile 'com.electronwill.night-config:toml:3.6.3'
-
-
+	mappings loom.layered() {
+		officialMojangMappings()
+		parchment("org.parchmentmc.data:parchment-1.18.2:2022.05.02@zip")
+	}
+	forge "net.minecraftforge:forge:${project.forge_version}"
 }
+
+loom {
+	forge {
+		mixinConfigs = [
+				"gamemode.mixins.json"
+		]
+	}
+
+	launches {
+		data {
+			arg "--existing", file("src/main/resources").absolutePath
+		}
+	}
+}
+
 
 processResources {
 	inputs.property "version", project.version
@@ -57,17 +70,7 @@ tasks.withType(JavaCompile).configureEach {
 	// If Javadoc is generated, this must be specified in that task too.
 	it.options.encoding = "UTF-8"
 
-	// The Minecraft launcher currently installs Java 8 for users, so your mod probably wants to target Java 8 too
-	// JDK 9 introduced a new way of specifying this that will make sure no newer classes or methods are used.
-	// We'll use that if it's available, but otherwise we'll use the older option.
-	def targetVersion = 8
-	if (JavaVersion.current().isJava9Compatible()) {
-		 it.options.release = targetVersion
-	}
-}
-
-minecraft {
-	accessWidener "src/main/resources/gamemode.accesswidener"
+	it.options.release = 17
 }
 
 java {
@@ -77,10 +80,14 @@ java {
 	withSourcesJar()
 }
 
-jar {
+jar { // shit
 	from("LICENSE") {
 		rename { "${it}_${project.archivesBaseName}"}
 	}
+}
+
+loom {
+	accessWidenerPath =  file("src/main/resources/gamemode.accesswidener")
 }
 
 // configure the maven publication
@@ -96,12 +103,10 @@ publishing {
 			}
 		}
 	}
-    
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
-        // Notice: This block does NOT have the same function as the block in the top level.
-        // The repositories here will be used for publishing your artifact, not for
-        // retrieving dependencies.
-    }
+
+	// Select the repositories you want to publish to
+	// To publish to maven local, no extra repositories are necessary. Just use the task `publishToMavenLocal`.
+	repositories {
+		// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+	}
 }
